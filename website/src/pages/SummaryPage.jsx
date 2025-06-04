@@ -1,9 +1,5 @@
-import React from "react";
-import { Container, Typography, Button, Stack } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-
+import { Container, Typography } from "@mui/material";
 export function SummaryPage() {
-  const navigate = useNavigate();
   return (
     <Container sx={{ mt: 10 }}>
       <Typography variant="h4" gutterBottom>
