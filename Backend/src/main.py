@@ -30,6 +30,9 @@ def read_root():
 @app.get("/models") 
 def get_all_models():
     with Session(engine) as session: 
-        print(select(Model))
         return session.exec(select(Model)).all()
-   
+    
+@app.get("/models/{model_id}")
+def get_model_id(model_id: UUID):
+    with Session(engine) as session: 
+        return session.exec(select(Model).where(Model.id == model_id)).all()
