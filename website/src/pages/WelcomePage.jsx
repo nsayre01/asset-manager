@@ -1,10 +1,6 @@
-import React from "react";
-import { Container, Typography, Button, Stack } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Container, Typography } from "@mui/material";
 
 export function WelcomePage() {
-  const navigate = useNavigate();
-
   return (
     <Container maxWidth="sm" sx={{ mt: 10 }}>
       <Typography variant="h3" gutterBottom>
@@ -12,7 +8,7 @@ export function WelcomePage() {
       </Typography>
       <Typography variant="body1" gutterBottom>
         This is a quick demo of routing and Material UI styling in a React +
-        TypeScript app.
+        JavaScript/TypeScript app.
       </Typography>
     </Container>
   );
