@@ -1,8 +1,6 @@
 """App.py reads in endpoints and does specified actions based on form informaiton"""
 # IMPORT THE SQALCHEMY LIBRARY's CREATE_ENGINE METHOD
 from uuid import UUID
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
 from fastapi import FastAPI
 from pydantic import BaseModel
 from datetime import date
@@ -17,21 +15,13 @@ user = 'postgres'
 password = 'postgres'
 host = 'db'
 database = 'postgres'
-
-# PYTHON FUNCTION TO CONNECT TO THE POSTGRESQL DATABASE AND
-# RETURN THE SQLACHEMY ENGINE OBJECT
-def get_connection():
-    return create_engine(
-        url="postgresql+psycopg2://{0}:{1}@{2}:5432/{3}".format(
-            user, password, host, database
-        )
-    )
+port = '5432'
 
 
-engine = get_connection()
+engine = create_engine( 
+            url="postgresql://{0}:{1}@{2}:{3}/{4}".format(
+            user, password, host, port, database))
 
-Session = sessionmaker(bind=engine)
-session = Session()
 
 @app.get("/")
 def read_root():
@@ -39,5 +29,7 @@ def read_root():
 
 @app.get("/models") 
 def get_all_models():
-    return session.execute(select(Model)).all
+    with Session(engine) as session: 
+        print(select(Model))
+        return session.exec(select(Model)).all()
    
