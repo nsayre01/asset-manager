@@ -1,74 +1,78 @@
-create table Asset_Type (
-    id int primary key,
-    name text unique
+-- Enable UUID generation
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
-);
-
-create table Asset(
-    barcode int primary key,
-    model text,
-    purch_date date,
-    type int references Asset_Type(id)
+-- Locations Lookup (ex: 'LIBR 123')
+CREATE TABLE IF NOT EXISTS location (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    building_code text NOT NULL,
+	building_name text NOT NULL,
+	room_number text NOT NULL
 );
 
-create table Asset_Status(
-    id int primary key,
-    name text unique,
-    description text
+-- Departments Lookup (ex: 'Athletics')
+CREATE TABLE IF NOT EXISTS department (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL UNIQUE
+); 
 
-);
-create table Technician(
-    technician_id int primary key,
-    start_date date,
-    end_date date,
-    active boolean,
-    first_name text,
-    last_name text,
-    manager int null references Technician(technician_id)
-);
-
-create table Account(
-    username text primary key,
-    password text,
-    technician_id int unique references Technician(technician_id)
-);
-create table Building(
-    id int primary key,
-    name text,
-    Description text
+-- Models Lookup (ex: Dell OptiPlex 7080)
+CREATE TABLE IF NOT EXISTS model (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    brand TEXT,
+    name TEXT NOT NULL UNIQUE,
+    small_form BOOLEAN,
+	type TEXT NOT NULL CHECK (
+        type IN ('Laptop', 'Monitor', 'Printer', 'Desktop', 'Tablet', 'iTech', 'Scanner', 'Software')
+    )
 );
 
-create table Dept(
-    id int primary key,
-    name text,
-    Description text
+-- Client (who assets can be assigned to)
+CREATE TABLE IF NOT EXISTS client (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    username TEXT UNIQUE NOT NULL,
+    dept_id UUID REFERENCES department(id),
+    active BOOLEAN NOT NULL DEFAULT TRUE
 );
-create table Room(
-    room_num text,
-    building int references Building(id),
-    floor int,
-    Primary key(room_num,building)
+
+-- technician - people updating the data
+CREATE TABLE IF NOT EXISTS technician (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    first_name TEXT NOT NULL,
+    last_name TEXT NOT NULL,
+    username TEXT UNIQUE NOT NULL,
+    active BOOLEAN NOT NULL DEFAULT TRUE
 );
-create table Dept_Room(
-    room_num text,
-	building int,
-    dept int references Dept(id),
-	Foreign Key (room_num,building) REFERENCES Room(room_num,building)
+
+-- Static asset info (immutable)
+CREATE TABLE IF NOT EXISTS asset_info (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    name TEXT NOT NULL UNIQUE, 	
+    serial_number TEXT NOT NULL UNIQUE,
+    purchase_date DATE NOT NULL,
+    warranty_expiration DATE,
+    model_id UUID NOT NULL REFERENCES model(id),
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_by UUID NOT NULL REFERENCES technician(id)
 );
-create table Ticket(
-    ticket_num text primary key,
-    start_date date,
-    end_date date,
-    room_num text,
-	building int,
-    technician_id int references Technician(technician_id),
-    client_name text,
-    description text,
-	Foreign Key (room_num,building) REFERENCES Room(room_num,building)
-);
-create table Ticket_Asset(
-    ticket_num text references Ticket(ticket_num),
-    barcode int references Asset(barcode),
-    status int references Asset_Status(id),
-    primary key (ticket_num,barcode)
+
+-- Asset change log (mutable / historical)
+CREATE TABLE IF NOT EXISTS asset_log (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    asset_id UUID NOT NULL REFERENCES asset_info(id) ON DELETE CASCADE,
+    status TEXT CHECK (
+        status in ('Assigned', 'In Stock', 'Scrapped', 'In Repair', 'Lost/Stolen')
+    ),
+    location_id UUID REFERENCES location(id),
+    assigned_to UUID REFERENCES client(id),
+    dept_id UUID REFERENCES department(id),
+    docking_station BOOLEAN,
+    is_primary BOOLEAN,
+    redeploy BOOLEAN,
+    notes TEXT,
+    last_audit DATE,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_by UUID NOT NULL REFERENCES technician(id)
+
 );
