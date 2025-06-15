@@ -2,10 +2,12 @@
 
 ## How to start website:
 
-In vs code terminal
+**In vs code terminal:**
 
+``` 
 cd website
 
 npm install
 
 npm start
+```

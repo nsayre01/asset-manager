@@ -17,13 +17,16 @@ The Postgres database is populated with handmade data that will simulate IT&S ti
 
 Inside the integrated terminal in VS Code, type
 ```
+cd Backend/src
+```
+```
 fastapi dev
 ```
-This will run the server bound to TCP port 5000. You can then make HTTP calls to `http://localhost:5000`
+This will run the server bound to TCP port 8000. You can then make HTTP calls to `http://localhost:8000`
 
 ### Connecting to the pgAdmin DBMS instance
 
-you may need to delete  .postgress_data file first to see changes 
+You may need to delete  .postgress_data file first to see changes 
 
 You can use the included dbms instance by opening `http://localhost:5050` in a browser window and entering the following credentials:
 
@@ -34,7 +37,13 @@ You can use the included dbms instance by opening `http://localhost:5050` in a b
 Lego database server credentials from the "Add New Server" dialog):
 
 **Connection -> Host**: `db`
+
+**Connection -> Port**: `5432`
+
 **Connection -> Username**: `postgres`
+
 **Connection -> Password**: `postgres`
 
 ## ENDPOINTS
+
+**To be added as we continue to create more endpoints.**
