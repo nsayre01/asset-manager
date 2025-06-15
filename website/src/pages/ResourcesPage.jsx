@@ -1,12 +1,12 @@
-import { Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export function ResourcesPage() {
   return (
-    <Container sx={{ mt: 10 }}>
+    <Box>
       <Typography variant="h4" gutterBottom>
         Resources
       </Typography>
       <Typography>Resources listed below</Typography>
-    </Container>
+    </Box>
   );
 }

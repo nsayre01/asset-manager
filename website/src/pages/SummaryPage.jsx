@@ -1,7 +1,7 @@
-import { Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 export function SummaryPage() {
   return (
-    <Container sx={{ mt: 10 }}>
+    <Box>
       <Typography variant="h4" gutterBottom>
         Project Summary
       </Typography>
@@ -14,6 +14,6 @@ export function SummaryPage() {
         existing assets inside. Users can also view a history of the room to see
         what has existed in the room before.
       </Typography>
-    </Container>
+    </Box>
   );
 }

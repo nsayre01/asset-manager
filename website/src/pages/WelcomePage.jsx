@@ -1,8 +1,8 @@
-import { Container, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export function WelcomePage() {
   return (
-    <Container maxWidth="sm" sx={{ mt: 10 }}>
+    <Box>
       <Typography variant="h3" gutterBottom>
         Welcome to our team!
       </Typography>
@@ -10,6 +10,6 @@ export function WelcomePage() {
         This is a quick demo of routing and Material UI styling in a React +
         JavaScript/TypeScript app.
       </Typography>
-    </Container>
+    </Box>
   );
 }
