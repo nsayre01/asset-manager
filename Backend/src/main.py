@@ -6,6 +6,8 @@ from pydantic import BaseModel
 from datetime import date
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 from models import Model
+from models import Location
+from models import Department
 
 app = FastAPI(title="PLU Asset Manager")
 
@@ -27,12 +29,26 @@ engine = create_engine(
 def read_root():
     return {"message": "Hello, World!"}
 
+#gets all the models in the db
 @app.get("/models") 
 def get_all_models():
     with Session(engine) as session: 
         return session.exec(select(Model)).all()
     
+#gets all the models with the same UUID as model_id
 @app.get("/models/{model_id}")
 def get_model_id(model_id: UUID):
     with Session(engine) as session: 
         return session.exec(select(Model).where(Model.id == model_id)).all()
+    
+#gets all the locations with the same UUID as location_id
+@app.get("/location/{location_id}")
+def get_location_id(location_id: UUID):
+    with Session(engine) as session:
+        return session.exec(select(Location).where(Location.id == location_id)).all()
+    
+#gets all the departments with the same UUID as department_id
+@app.get("/department/{department_id}")
+def get_department_id(department_id: UUID):
+    with Session(engine) as session:
+        return session.exec(select(Department).where(Department.id == department_id)).all()
