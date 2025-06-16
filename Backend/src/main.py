@@ -51,13 +51,13 @@ def get_model_id(model_id: UUID):
         return session.exec(select(Model).where(Model.id == model_id)).all()
     
 #gets all the locations with the same UUID as location_id
-@app.get("/location/{location_id}")
+@app.get("/locations/{location_id}")
 def get_location_id(location_id: UUID):
     with Session(engine) as session:
         return session.exec(select(Location).where(Location.id == location_id)).all()
     
 #gets all the departments with the same UUID as department_id
-@app.get("/department/{department_id}")
+@app.get("/departments/{department_id}")
 def get_department_id(department_id: UUID):
     with Session(engine) as session:
         return session.exec(select(Department).where(Department.id == department_id)).all()
