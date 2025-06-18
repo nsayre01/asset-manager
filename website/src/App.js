@@ -6,6 +6,7 @@ import { SummaryPage } from "./pages/SummaryPage";
 import { AboutMentors } from "./pages/AboutMentor";
 import { ResourcesPage } from "./pages/ResourcesPage";
 import { Layout } from "./layout/Layout";
+import { BackendExamplePage } from "./pages/BackendExamplePage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/summary" element={<SummaryPage />} />
         <Route path="/about-mentors" element={<AboutMentors />} />
         <Route path="/resources" element={<ResourcesPage />} />
+        <Route path="/backend-example" element={<BackendExamplePage />} />
       </Route>
     </Routes>
   );
