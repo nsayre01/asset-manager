@@ -25,6 +25,7 @@ export const BasicDrawer = () => {
     { text: "Summary", path: "/summary", icon: <SummarizeIcon /> },
     { text: "About Mentors", path: "/about-mentors", icon: <PeopleIcon /> },
     { text: "Resources", path: "/resources", icon: <LibraryBooksIcon /> },
+    { text: "About Chris", path: "/about-chris" , icon: <PeopleIcon /> },
   ];
 
   return (
