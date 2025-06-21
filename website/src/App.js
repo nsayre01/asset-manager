@@ -4,6 +4,8 @@ import { Route, Routes } from "react-router-dom";
 import { WelcomePage } from "./pages/WelcomePage";
 import { SummaryPage } from "./pages/SummaryPage";
 import { AboutMentors } from "./pages/AboutMentor";
+
+import { BackendExamplePage } from "./pages/BackendExamplePage";
 import { ResourcesPage } from "./pages/ResourcesPage";
 import { Layout } from "./layout/Layout";
 import AboutChris from "./pages/AboutChris";
@@ -17,6 +19,7 @@ function App() {
         <Route path="/about-mentors" element={<AboutMentors />} />
         <Route path="/resources" element={<ResourcesPage />} />
         <Route path="/about-chris" element={<AboutChris />} />
+        <Route path="/backend-example" element={<BackendExamplePage />} />
       </Route>
     </Routes>
   );

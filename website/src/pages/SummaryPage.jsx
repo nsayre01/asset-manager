@@ -1,11 +1,7 @@
-import React from "react";
-import { Container, Typography, Button, Stack } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-
+import { Box, Typography } from "@mui/material";
 export function SummaryPage() {
-  const navigate = useNavigate();
   return (
-    <Container sx={{ mt: 10 }}>
+    <Box>
       <Typography variant="h4" gutterBottom>
         Project Summary
       </Typography>
@@ -18,6 +14,6 @@ export function SummaryPage() {
         existing assets inside. Users can also view a history of the room to see
         what has existed in the room before.
       </Typography>
-    </Container>
+    </Box>
   );
 }

@@ -14,6 +14,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import SummarizeIcon from "@mui/icons-material/Summarize";
 import PeopleIcon from "@mui/icons-material/People";
 import LibraryBooksIcon from "@mui/icons-material/LibraryBooks";
+import ApiIcon from "@mui/icons-material/Api";
 
 const drawerWidth = 250;
 
@@ -25,7 +26,12 @@ export const BasicDrawer = () => {
     { text: "Summary", path: "/summary", icon: <SummarizeIcon /> },
     { text: "About Mentors", path: "/about-mentors", icon: <PeopleIcon /> },
     { text: "Resources", path: "/resources", icon: <LibraryBooksIcon /> },
-    { text: "About Chris", path: "/about-chris" , icon: <PeopleIcon /> },
+    { text: "About Chris", path: "/about-chris", icon: <PeopleIcon /> },
+    {
+      text: "Backend Example",
+      path: "/backend-example",
+      icon: <ApiIcon />,
+    },
   ];
 
   return (
@@ -51,7 +57,16 @@ export const BasicDrawer = () => {
           ))}
         </List>
       </Drawer>
-      <Outlet />
+      <Box
+        component="main"
+        sx={{
+          width: "100%",
+        }}
+        mt={10}
+        ml={3}
+      >
+        <Outlet />
+      </Box>
     </Box>
   );
 };
