@@ -9,6 +9,9 @@ import { BackendExamplePage } from "./pages/BackendExamplePage";
 import { ResourcesPage } from "./pages/ResourcesPage";
 import { Layout } from "./layout/Layout";
 import AboutChris from "./pages/AboutChris";
+import ModelDetailPage from "./pages/ModelDetailPage";
+
+
 
 function App() {
   return (
@@ -19,6 +22,8 @@ function App() {
         <Route path="/about-mentors" element={<AboutMentors />} />
         <Route path="/resources" element={<ResourcesPage />} />
         <Route path="/about-chris" element={<AboutChris />} />
+        <Route path="/models/:id" element={<ModelDetailPage />} />
+
         <Route path="/backend-example" element={<BackendExamplePage />} />
       </Route>
     </Routes>

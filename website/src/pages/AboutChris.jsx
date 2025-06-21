@@ -1,6 +1,7 @@
 // src/pages/AboutChris.jsx
 import React, { useEffect, useState } from "react";
-import api from "../api";
+import { useNavigate } from "react-router-dom";
+
 import {
   Box,
   Typography,
@@ -9,68 +10,125 @@ import {
   Avatar,
   Chip,
   Stack,
+  Collapse,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 } from "@mui/material";
 
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+
+import api from "../api"; // Adjust the path if needed
+
+// Row component for collapsible table rows
+function Row({ row }) {
+  const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+
+  return (
+    <>
+      <TableRow
+        hover
+        sx={{ "& > *": { borderBottom: "unset" }, cursor: "pointer" }}
+        onClick={() => navigate(`/models/${row.id}`)}
+      >
+        <TableCell onClick={(e) => e.stopPropagation()}>
+          <IconButton
+            aria-label="expand row"
+            size="small"
+            onClick={() => setOpen(!open)}
+          >
+            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          </IconButton>
+        </TableCell>
+        <TableCell>{row.name}</TableCell>
+        <TableCell>{row.brand}</TableCell>
+        <TableCell>{row.type}</TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={4}>
+          <Collapse in={open} timeout="auto" unmountOnExit>
+            <Box sx={{ margin: 1 }}>
+              <Typography variant="h6" gutterBottom>
+                History
+              </Typography>
+              <Table size="small" aria-label="history">
+                <TableHead>
+                  <TableRow>
+                    <TableCell>Date</TableCell>
+                    <TableCell>Note</TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {(row.history ?? []).map((item, index) => (
+                    <TableRow key={index}>
+                      <TableCell>{item.date}</TableCell>
+                      <TableCell>{item.note}</TableCell>
+                    </TableRow>
+                  ))}
+                  {(!row.history || row.history.length === 0) && (
+                    <TableRow>
+                      <TableCell colSpan={2}>No history available.</TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </Box>
+          </Collapse>
+        </TableCell>
+      </TableRow>
+    </>
+  );
+}
+
 const AboutChris = () => {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [models, setModels] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const [models, setModels] = useState([]); //refer to storing the data being fetched locally
-
-  /**
-   * Fetches models(stuff/data) from the backend API and updates state.
-   * anything like data i want to pull from the backend fetch anything
-   *
-   * @async
-   * @function fetchModels
-   * @returns {Promise<void>}
-   */
+  // Fetch models from backend API
   const fetchModels = async () => {
     try {
-      const response = await api.get("/models"); //this is what is being fetched
-      console.log("Fetched models:", response.data);
-      setModels(response.data);
+      const response = await api.get("/models");
+      // Add sample history to each model (replace or remove as needed)
+      const modelsWithHistory = response.data.map((model) => ({
+        ...model,
+        history: [
+          { date: "2023-01-10", note: "Inventory Checked" },
+          { date: "2024-05-22", note: "OS Updated" },
+        ],
+      }));
+      setModels(modelsWithHistory);
     } catch (error) {
       console.error("Error fetching models:", error);
     } finally {
       setLoading(false);
     }
   };
-  // static write here:
+
+  useEffect(() => {
+    fetchModels();
+  }, []);
+
+  // Static profile data
   const chrisData = {
-    name: "Chris Barker",
+    name: "Chris Barker, Age 31",
     title: "Student, Major (undetermined)",
     avatarUrl: "/images/imageChrisWorldCup2025.jpg",
-    bio: "Hi! I'm Chris, a Senior; I am not so good at programming and trying to find my niche in the industry. I am a transfer student, got an AA from TCC and went to UWT for a year before coming to PLU",
+    bio: "Hi! I'm Chris, a Senior; I am not so good at programming and trying to find my niche in the industry. I am a transfer student, got an AA from TCC and went to UWT for a year before coming to PLU.",
     interests: ["Programming", "Sports", "Lake", "Photography", "Dancing"],
   };
-  //pulling out data and putting where it typed (makes easier for objects)
-  //const {name, title, avatarUrl, bio, interests} = chrisData
-
-  // useEffect(() => {
-  //   fetch("http://localhost:3001/api/about-chris")
-  //     .then((res) => res.json())
-  //     .then((fetchedData) => {
-  //       setData(fetchedData);
-  //       setLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //       setLoading(false);
-  //     });
-  // }, []);
-
-  if (loading) {
-    return (
-      <Typography variant="body1" align="center" sx={{ mt: 8 }}>
-        Loading...
-      </Typography>
-    );
-  }
 
   return (
-    <Box maxWidth={600} mx="auto" mt={5} px={2} textAlign="center">
-      <Typography variant="h3" component="h1" gutterBottom>
+    <Box maxWidth={1000} mx="auto" mt={5} px={2}>
+      {/* Profile Section */}
+      <Typography variant="h3" component="h1" align="center" gutterBottom>
         About Chris
       </Typography>
 
@@ -110,6 +168,35 @@ const AboutChris = () => {
           )}
         </CardContent>
       </Card>
+
+      {/* Collapsible Table Section */}
+      <Box mt={6}>
+        <Typography variant="h4" gutterBottom>
+          Device Models
+        </Typography>
+
+        {loading ? (
+          <Typography>Loading model data...</Typography>
+        ) : (
+          <TableContainer component={Paper}>
+            <Table aria-label="collapsible model table">
+              <TableHead>
+                <TableRow>
+                  <TableCell />
+                  <TableCell>Name</TableCell>
+                  <TableCell>Brand</TableCell>
+                  <TableCell>Type</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {models.map((model) => (
+                  <Row key={model.id} row={model} />
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
+      </Box>
     </Box>
   );
 };
