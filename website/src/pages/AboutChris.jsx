@@ -180,7 +180,7 @@ const AboutChris = () => {
     name: "Chris Barker, Age: Negative, Race: Lizard",
     title: "Student, Major (undetermined)",
     avatarUrl: "/images/imageChrisWorldCup2025.jpg",
-    bio: "Hi! I'm Chris, a Senior; I have been pursuing coding for along time, in 2008 I couldn't do html, in 2015 I couldn't do css, well its 2025 and I am still trying to find my niche. I attending Tacoma Community College, University of Washington Tacoma, and now Pacific Luthern University. ",
+    bio: "Hi! I'm Chris, a Senior; I have been pursued coding for along time, in 2008 I couldn't do html, in 2015 I couldn't do css, well its 2025 and I am still trying to find my niche. I attending Tacoma Community College, University of Washington Tacoma, and now Pacific Luthern University. ",
     interests: ["Programming", "Sports", "Fishing", "Photography", "Dancing"],
   };
 
