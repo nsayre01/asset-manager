@@ -5,13 +5,9 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from datetime import date
 from sqlmodel import Field, Session, SQLModel, create_engine, select
-from models import Model
-<<<<<<< HEAD
-from models import Location
-from models import Department
-=======
 from fastapi.middleware.cors import CORSMiddleware
->>>>>>> 61054a3e5149a0bfe4eb81c65f434ce276133a63
+
+from models import Model, Location, Department
 
 app = FastAPI(title="PLU Asset Manager")
 
@@ -39,27 +35,39 @@ engine = create_engine(
 
 @app.get("/")
 def read_root():
-    return {"message": "Hello, World!"}
+    return {"message": "Davine is Awesome ^_____^"}
 
-#gets all the models in the db
+#get all the models in the db
 @app.get("/models") 
 def get_all_models():
     with Session(engine) as session: 
         return session.exec(select(Model)).all()
     
-#gets all the models with the same UUID as model_id
+#get all the models with the same UUID as model_id
 @app.get("/models/{model_id}")
 def get_model_id(model_id: UUID):
     with Session(engine) as session: 
         return session.exec(select(Model).where(Model.id == model_id)).all()
     
-#gets all the locations with the same UUID as location_id
+#get all the locations in the db
+@app.get("/locations") 
+def get_all_locations():
+    with Session(engine) as session: 
+        return session.exec(select(Location)).all()
+    
+#get all the locations with the same UUID as location_id
 @app.get("/locations/{location_id}")
 def get_location_id(location_id: UUID):
     with Session(engine) as session:
         return session.exec(select(Location).where(Location.id == location_id)).all()
     
-#gets all the departments with the same UUID as department_id
+#get all the departments in the db
+@app.get("/departments") 
+def get_all_departments():
+    with Session(engine) as session: 
+        return session.exec(select(Department)).all()
+    
+#get all the departments with the same UUID as department_id
 @app.get("/departments/{department_id}")
 def get_department_id(department_id: UUID):
     with Session(engine) as session:

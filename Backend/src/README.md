@@ -20,19 +20,12 @@ Inside the integrated terminal in VS Code, type
 
 ```
 cd Backend/src
-<<<<<<< HEAD
-```
-```
-fastapi dev
-```
-=======
 ```
 
 ```
 fastapi dev --host 0.0.0.0
 ```
 
->>>>>>> 61054a3e5149a0bfe4eb81c65f434ce276133a63
 This will run the server bound to TCP port 8000. You can then make HTTP calls to `http://localhost:8000`
 
 ### Connecting to the pgAdmin DBMS instance
