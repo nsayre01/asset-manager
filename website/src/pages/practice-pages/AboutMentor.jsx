@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import MentorRow from "./components/MentorCards";
+import MentorRow from "../components/MentorCards";
 
 export function AboutMentors() {
   return (

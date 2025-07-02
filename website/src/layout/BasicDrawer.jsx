@@ -23,14 +23,14 @@ export const BasicDrawer = () => {
 
   const navItems = [
     { text: "Home", path: "/", icon: <HomeIcon /> },
-    { text: "Summary", path: "/summary", icon: <SummarizeIcon /> },
-    { text: "About Mentors", path: "/about-mentors", icon: <PeopleIcon /> },
-    { text: "Resources", path: "/resources", icon: <LibraryBooksIcon /> },
-    {
-      text: "Backend Example",
-      path: "/backend-example",
-      icon: <ApiIcon />,
-    },
+    // { text: "Summary", path: "/summary", icon: <SummarizeIcon /> },
+    // { text: "About Mentors", path: "/about-mentors", icon: <PeopleIcon /> },
+    // { text: "Resources", path: "/resources", icon: <LibraryBooksIcon /> },
+    // {
+    //   text: "Backend Example",
+    //   path: "/backend-example",
+    //   icon: <ApiIcon />,
+    // },
   ];
 
   return (
