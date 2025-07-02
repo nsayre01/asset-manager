@@ -8,14 +8,14 @@ import {
   Paper,
   Box,
 } from "@mui/material";
-import api from "../api";
-import DataTable from "./components/DataTable";
+import api from "../../api";
+import DataTable from "../components/DataTable";
 
 export function BackendExamplePage() {
   const [models, setModels] = useState([]);
   const [loading, setLoading] = useState(true);
 
-   /**
+  /**
    * Fetches models from the backend API and updates state.
    *
    * @async
